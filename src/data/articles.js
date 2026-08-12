@@ -1,0 +1,58 @@
+// This data module is the future automation seam: a feed, CMS, or scraper can
+// replace this exported array without changing the Articles & Media interface.
+export const articles = [
+  {
+    title: "Crypto ‘disposals’ trigger income tax on profits in each transaction",
+    summary: "Dave explores why complete transaction records are essential when crypto assets are sold, exchanged, or otherwise disposed of.",
+    category: "Analysis",
+    source: "Meridian Partners",
+    date: "Latest analysis",
+    isoDate: "",
+    href: "https://mplaw.nz/crypto-disposals-trigger-income-tax-on-any-profits-in-each-transaction/",
+  },
+  {
+    title: "Inland Revenue crackdown on tax debt continues",
+    summary: "Dave discusses Inland Revenue’s increasing enforcement focus.",
+    category: "Media",
+    source: "RNZ Nine to Noon",
+    date: "10 Sep 2025",
+    isoDate: "2025-09-10",
+    href: "https://mplaw.nz/rnz-ird-crackdown-on-tax-debt/",
+  },
+  {
+    title: "Commentary on student loan enforcement",
+    summary: "Dave explains enforcement risks for overseas borrowers.",
+    category: "Media",
+    source: "Newstalk ZB",
+    date: "4 Jul 2025",
+    isoDate: "2025-07-04",
+    href: "https://mplaw.nz/dave-ananth-commentary-student-loan-enforcement/",
+  },
+  {
+    title: "When tax law meets the real world",
+    summary: "Why commercial judgement matters in IRD tax debt decisions.",
+    category: "Analysis",
+    source: "Dave Ananth",
+    date: "Analysis",
+    isoDate: "",
+    href: "https://mplaw.nz/when-tax-law-meets-the-real-world-ird-tax-debt-decisions/",
+  },
+  {
+    title: "Timor-Leste: an emerging opportunity for New Zealand investors",
+    summary: "A closer look at regional investment and trade opportunities.",
+    category: "Updates",
+    source: "Dave Ananth",
+    date: "Firm update",
+    isoDate: "",
+    href: "https://mplaw.nz/timor-leste-an-emerging-opportunity-new-zealand/",
+  },
+  {
+    title: "Can IRD arrest me at the border over my student loan?",
+    summary: "What overseas-based borrowers need to know before travelling.",
+    category: "Analysis",
+    source: "Meridian Partners",
+    date: "Guide",
+    isoDate: "",
+    href: "https://mplaw.nz/can-ird-arrest-me-at-the-border-over-my-student-loan/",
+  },
+];
