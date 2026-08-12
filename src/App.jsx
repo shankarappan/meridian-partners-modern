@@ -17,6 +17,8 @@ import {
 } from "@phosphor-icons/react";
 import { articles } from "./data/articles.js";
 
+const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
+
 const serviceItems = [
   {
     label: "Tax disputes & IRD negotiation",
@@ -54,25 +56,25 @@ const team = [
   {
     name: "Adelina Ong",
     role: "Partner & Notary Public",
-    image: "/assets/adelina-ong.png",
+    image: asset("adelina-ong.png"),
     href: "https://mplaw.nz/about/adelina-ong/",
   },
   {
     name: "Dave Ananth",
     role: "Partner, Tax Disputes",
-    image: "/assets/dave-ananth.png",
+    image: asset("dave-ananth.png"),
     href: "https://mplaw.nz/about/dave-ananth/",
   },
   {
     name: "Arvind Nair",
     role: "Partner, Commercial Litigation",
-    image: "/assets/arvind-nair.png",
+    image: asset("arvind-nair.png"),
     href: "https://mplaw.nz/about/arvind-nair/",
   },
   {
     name: "Michelle Delegat",
     role: "Solicitor, Family Law",
-    image: "/assets/michelle-delegat.png",
+    image: asset("michelle-delegat.png"),
     href: "https://mplaw.nz/about/michelle-delegat/",
   },
 ];
@@ -82,7 +84,7 @@ const bookingHref = "https://mplaw.nz/book-a-consultation/";
 function Logo({ light = false }) {
   return (
     <a className={`logo ${light ? "logo--light" : ""}`} href="#top" aria-label="Meridian Partners home">
-      <img src="/assets/meridian-logo.png" width="210" height="110" alt="Meridian Partners, Barristers and Solicitors" />
+      <img src={asset("meridian-logo.png")} width="210" height="110" alt="Meridian Partners, Barristers and Solicitors" />
     </a>
   );
 }
@@ -187,7 +189,7 @@ function Hero() {
         </div>
       </div>
       <figure className="hero-image">
-        <img src="/assets/auckland-skyline.jpg" width="1056" height="1280" alt="Auckland skyline and Sky Tower viewed across the harbour at night" />
+        <img src={asset("auckland-skyline.jpg")} width="1056" height="1280" alt="Auckland skyline and Sky Tower viewed across the harbour at night" />
       </figure>
     </section>
   );
@@ -229,7 +231,7 @@ function DaveProfile() {
           </a>
         </div>
         <figure className="dave-portrait">
-          <img src="/assets/dave-ananth.png" width="512" height="512" alt="Dave Ananth, Partner at Meridian Partners" loading="lazy" />
+          <img src={asset("dave-ananth.png")} width="512" height="512" alt="Dave Ananth, Partner at Meridian Partners" loading="lazy" />
         </figure>
         <div className="dave-profile">
           <p className="eyebrow">Meet our lead tax lawyer</p>
@@ -296,7 +298,7 @@ function Insights() {
           <div className="articles-layout" aria-live="polite">
             <article className="lead-article">
               <a href={lead.href} target="_blank" rel="noreferrer" aria-label={`Read ${lead.title}`}>
-                <img src="/assets/article-auckland-architecture.png" width="1664" height="944" alt="Contemporary Auckland commercial architecture with the Sky Tower in the distance" loading="lazy" />
+                <img src={asset("article-auckland-architecture.png")} width="1664" height="944" alt="Contemporary Auckland commercial architecture with the Sky Tower in the distance" loading="lazy" />
               </a>
               <div className="article-meta"><span>{lead.category}</span><time dateTime={lead.isoDate}>{lead.date}</time></div>
               <h3><a href={lead.href} target="_blank" rel="noreferrer">{lead.title}</a></h3>
