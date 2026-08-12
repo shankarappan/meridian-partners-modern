@@ -56,25 +56,25 @@ const team = [
   {
     name: "Adelina Ong",
     role: "Partner & Notary Public",
-    image: asset("adelina-ong.png"),
+    image: asset("adelina-ong.webp"),
     href: "https://mplaw.nz/about/adelina-ong/",
   },
   {
     name: "Dave Ananth",
     role: "Partner, Tax Disputes",
-    image: asset("dave-ananth.png"),
+    image: asset("dave-ananth.webp"),
     href: "https://mplaw.nz/about/dave-ananth/",
   },
   {
     name: "Arvind Nair",
     role: "Partner, Commercial Litigation",
-    image: asset("arvind-nair.png"),
+    image: asset("arvind-nair.webp"),
     href: "https://mplaw.nz/about/arvind-nair/",
   },
   {
     name: "Michelle Delegat",
     role: "Solicitor, Family Law",
-    image: asset("michelle-delegat.png"),
+    image: asset("michelle-delegat.webp"),
     href: "https://mplaw.nz/about/michelle-delegat/",
   },
 ];
@@ -231,7 +231,7 @@ function DaveProfile() {
           </a>
         </div>
         <figure className="dave-portrait">
-          <img src={asset("dave-ananth.png")} width="512" height="512" alt="Dave Ananth, Partner at Meridian Partners" loading="lazy" />
+          <img src={asset("dave-ananth.webp")} width="1200" height="1200" alt="Dave Ananth, Partner at Meridian Partners" loading="lazy" />
         </figure>
         <div className="dave-profile">
           <p className="eyebrow">Meet our lead tax lawyer</p>
@@ -260,7 +260,7 @@ function Team() {
         <div className="team-list">
           {team.map((person) => (
             <a className="person" key={person.name} href={person.href} target="_blank" rel="noreferrer">
-              <img src={person.image} width="512" height="512" alt="" loading="lazy" />
+              <img src={person.image} width="1200" height="1200" alt="" loading="lazy" />
               <span className="person-overlay">
                 <strong>{person.name}</strong>
                 <small>{person.role}</small>

@@ -1,33 +1,32 @@
-# Footer logo design QA
+# Team portrait replacement QA
 
-- Source visual truth: `/var/folders/n2/d96307fd2c91hg5g4xt_f24m0000gn/T/codex-clipboard-bfe8160e-fef5-47c8-b73b-78ea0544051b.png`
-- Implementation screenshot: `qa-footer-fixed.png`
-- Combined comparison: `qa-footer-comparison.png`
-- Source pixels: 400 × 219.
-- Implementation pixels: 1265 × 712 at the browser's desktop viewport and device density.
-- State: desktop page scrolled to the footer.
+- Source visual truth: `/Users/shankar/Downloads/Adelina.png`, `/Users/shankar/Downloads/Dave.png`, `/Users/shankar/Downloads/Arvind.png`, and `/Users/shankar/Downloads/Michelle.png`.
+- Implementation screenshot: `qa-team-portraits.png`.
+- Source pixels: 2400 × 1792 each.
+- Web assets: centred square crops at 1200 × 1200, WebP quality 84.
+- State: desktop homepage, Dave feature and team row inspected in the in-app browser.
 
 ## Full-view comparison evidence
 
-The corrected footer preserves the existing four-column structure, navy surface, footer copy, spacing, and hierarchy. The white rectangle visible behind the source logo is absent in the implementation.
+The supplied portraits replace the existing photography in every Meridian portrait slot. Dave's new image appears in both his large profile feature and the compact team row; Adelina, Arvind, and Michelle appear in their named team cards.
 
 ## Focused region evidence
 
-The combined comparison shows the reported source crop on the left and the corrected rendered footer on the right. The transparent logo now sits directly on the navy background. A restrained white treatment keeps the small wordmark readable and visually consistent with the footer.
+The square crops retain each person's complete head, shoulders, and professional attire. Dave's feature crop preserves his face, glasses, lapel pins, and pocket detail. The four team cards have consistent head scale and background tone with no clipped heads.
 
 ## Required fidelity surfaces
 
-- Fonts and typography: unchanged; no new wrapping or hierarchy drift.
-- Spacing and layout rhythm: unchanged; removing the eight-pixel inline padding does not disturb the footer grid.
-- Colors and visual tokens: navy background retained; logo is now a quiet white treatment with 92% opacity.
-- Image quality and asset fidelity: original transparent PNG retained; no replacement or recreation. No rectangular background or transparency halo is visible.
-- Copy and content: unchanged.
+- Fonts and typography: unchanged.
+- Spacing and layout rhythm: unchanged; all assets use the existing square portrait containers.
+- Colors and visual tokens: unchanged; the supplied neutral studio backgrounds integrate with the warm-white page.
+- Image quality and asset fidelity: supplied originals used directly as the source; centred square WebP derivatives reduce total transfer weight while retaining 1200-pixel resolution.
+- Copy and content: unchanged; filenames map to the matching team names.
 
 ## Comparison history
 
-- Earlier P2: footer-only CSS added a white background and horizontal padding to the transparent logo, producing the box reported by the user.
-- Fix: removed the white background and padding; applied a white 92%-opacity treatment to the existing transparent asset.
-- Post-fix evidence: `qa-footer-fixed.png` and `qa-footer-comparison.png` show the logo blending directly into the navy footer with no visible box.
+- Initial check: all originals were 2400 × 1792 and 5–6 MB, unsuitable for direct web delivery.
+- Fix: created consistent centred 1200 × 1200 crops at 66–96 KB each and updated every portrait reference.
+- Post-fix evidence: browser capture confirms consistent, unclipped framing in Dave's feature and all four team cards.
 
 ## Findings
 
@@ -35,8 +34,9 @@ No actionable P0, P1, or P2 findings remain.
 
 ## Primary checks
 
-- Footer and navigation links remain present in the browser-rendered DOM.
-- Build and Sites worker tests pass.
-- Browser DOM inspection completed; no rendering blocker observed.
+- Production build passes.
+- Sites worker tests pass.
+- Desktop browser rendering inspected for both portrait sections.
+- Existing navigation and portrait profile links remain present.
 
 final result: passed
