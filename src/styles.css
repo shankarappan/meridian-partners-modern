@@ -141,7 +141,8 @@ h3 { font-size: 1.55rem; }
 .site-footer { padding-top: 55px; color: #d6dee2; background: var(--navy-950); }
 .footer-grid { display: grid; grid-template-columns: 1.35fr repeat(2,.8fr) 1.3fr; gap: 60px; padding-bottom: 45px; }
 .footer-brand .logo { margin-bottom: 12px; }
-.logo--light { padding-inline: 8px; background: var(--white); }
+.logo--light { background: transparent; }
+.logo--light img { filter: brightness(0) invert(1); opacity: .92; }
 .footer-brand p { max-width: 290px; color: #b8c3c9; font-size: .86rem; }
 .footer-grid h2 { margin-bottom: 14px; color: var(--gold-pale); font-family: var(--font-body); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .footer-grid > div:not(.footer-brand) a, .footer-grid address a { width: fit-content; margin-bottom: 8px; display: flex; gap: 9px; align-items: flex-start; color: #c0cbd0; font-size: .82rem; }
