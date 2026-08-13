@@ -298,7 +298,7 @@ function Insights() {
           <div className="articles-layout" aria-live="polite">
             <article className="lead-article">
               <a href={lead.href} target="_blank" rel="noreferrer" aria-label={`Read ${lead.title}`}>
-                <img src={asset("article-auckland-architecture.png")} width="1664" height="944" alt="Contemporary Auckland commercial architecture with the Sky Tower in the distance" loading="lazy" />
+                <img src={asset(lead.image ?? "article-auckland-architecture.png")} width="1664" height="944" alt={lead.imageAlt ?? "Contemporary Auckland commercial architecture with the Sky Tower in the distance"} loading="lazy" />
               </a>
               <div className="article-meta"><span>{lead.category}</span><time dateTime={lead.isoDate}>{lead.date}</time></div>
               <h3><a href={lead.href} target="_blank" rel="noreferrer">{lead.title}</a></h3>

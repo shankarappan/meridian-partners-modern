@@ -2,6 +2,26 @@
 // replace this exported array without changing the Articles & Media interface.
 export const articles = [
   {
+    title: "Over half a million people owe tax. How did this happen?",
+    summary: "RNZ examines how New Zealand’s tax debt reached $9.4 billion, why micro and small-to-medium businesses account for most of it, and the renewed focus on collection.",
+    category: "Media",
+    source: "RNZ Business",
+    date: "11 Aug 2026",
+    isoDate: "2026-08-11",
+    image: "article-commercial.jpg",
+    imageAlt: "Business advisers discussing documents across a desk",
+    href: "https://www.rnz.co.nz/news/business/957513/over-half-a-million-people-owe-tax-how-did-this-happen",
+  },
+  {
+    title: "What should you do about overdue tax?",
+    summary: "Dave Ananth explains why people and viable businesses facing tax or student-loan arrears should engage with Inland Revenue early and seek a workable resolution.",
+    category: "Media",
+    source: "RNZ Nine to Noon",
+    date: "1 Jul 2026",
+    isoDate: "2026-07-01",
+    href: "https://www.rnz.co.nz/news/personal-finance/650497/what-should-you-do-about-overdue-tax",
+  },
+  {
     title: "Crypto ‘disposals’ trigger income tax on profits in each transaction",
     summary: "Dave explores why complete transaction records are essential when crypto assets are sold, exchanged, or otherwise disposed of.",
     category: "Analysis",
@@ -9,15 +29,6 @@ export const articles = [
     date: "Latest analysis",
     isoDate: "",
     href: "https://mplaw.nz/crypto-disposals-trigger-income-tax-on-any-profits-in-each-transaction/",
-  },
-  {
-    title: "Inland Revenue crackdown on tax debt continues",
-    summary: "Dave discusses Inland Revenue’s increasing enforcement focus.",
-    category: "Media",
-    source: "RNZ Nine to Noon",
-    date: "10 Sep 2025",
-    isoDate: "2025-09-10",
-    href: "https://mplaw.nz/rnz-ird-crackdown-on-tax-debt/",
   },
   {
     title: "Commentary on student loan enforcement",
