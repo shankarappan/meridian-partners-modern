@@ -2,7 +2,7 @@
   "source": "https://mplaw.nz",
   "api": "https://mplaw.nz/wp-json/wp/v2",
   "access": "Public, read-only WordPress REST API",
-  "syncedAt": "2026-08-25T01:30:50.434Z",
+  "syncedAt": "2026-08-25T01:37:59.842Z",
   "collections": {
     "posts": [
       {
