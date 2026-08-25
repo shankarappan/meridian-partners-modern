@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
+  ArrowSquareOut,
   Buildings,
   CaretRight,
   Check,
@@ -9,15 +10,27 @@ import {
   HouseLine,
   List,
   MapPin,
+  MagnifyingGlass,
   PenNib,
   Phone,
   Scales,
   UsersThree,
   X,
 } from "@phosphor-icons/react";
-import { articles } from "./data/articles.js";
+import articleLibrary from "./data/article-library.json";
+import { externalArticles } from "./data/articles.js";
 
 const asset = (path) => `${import.meta.env.BASE_URL}assets/${path}`;
+const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+const homeHref = (hash = "") => `${import.meta.env.BASE_URL}${hash}`;
+const archiveHref = `${import.meta.env.BASE_URL}?view=articles`;
+const articleHref = (slug) => `${import.meta.env.BASE_URL}?article=${encodeURIComponent(slug)}`;
+const allArticles = [...externalArticles, ...articleLibrary].sort((a, b) => b.date.localeCompare(a.date));
+const dateFormatter = new Intl.DateTimeFormat("en-NZ", { day: "numeric", month: "short", year: "numeric" });
+const displayDate = (date) => dateFormatter.format(new Date(`${date}T12:00:00`));
+const articleLinkProps = (article) => article.externalUrl
+  ? { href: article.externalUrl, target: "_blank", rel: "noreferrer" }
+  : { href: articleHref(article.slug) };
 
 const serviceItems = [
   {
@@ -83,7 +96,7 @@ const bookingHref = "https://mplaw.nz/book-a-consultation/";
 
 function Logo({ light = false }) {
   return (
-    <a className={`logo ${light ? "logo--light" : ""}`} href="#top" aria-label="Meridian Partners home">
+    <a className={`logo ${light ? "logo--light" : ""}`} href={homeHref("#top")} aria-label="Meridian Partners home">
       <img src={asset("meridian-logo.png")} width="210" height="110" alt="Meridian Partners, Barristers and Solicitors" />
     </a>
   );
@@ -136,11 +149,11 @@ function Header() {
       <div className="shell header-inner">
         <Logo />
         <nav className="desktop-nav" aria-label="Primary navigation">
-          <a href="#expertise">Expertise</a>
-          <a href="#people">Our people</a>
-          <a href="#insights">Articles & media</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href={homeHref("#expertise")}>Expertise</a>
+          <a href={homeHref("#people")}>Our people</a>
+          <a href={archiveHref}>Articles & media</a>
+          <a href={homeHref("#about")}>About</a>
+          <a href={homeHref("#contact")}>Contact</a>
         </nav>
         <a className="button button--gold header-cta" href={bookingHref} target="_blank" rel="noreferrer">
           Book a free <span>10-minute consultation</span>
@@ -159,11 +172,11 @@ function Header() {
       </div>
       <div className={`mobile-menu ${open ? "is-open" : ""}`} id="mobile-menu" ref={menuRef} aria-hidden={!open}>
         <nav aria-label="Mobile navigation">
-          <a href="#expertise" onClick={closeMenu}>Expertise</a>
-          <a href="#people" onClick={closeMenu}>Our people</a>
-          <a href="#insights" onClick={closeMenu}>Articles & media</a>
-          <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
+          <a href={homeHref("#expertise")} onClick={closeMenu}>Expertise</a>
+          <a href={homeHref("#people")} onClick={closeMenu}>Our people</a>
+          <a href={archiveHref} onClick={closeMenu}>Articles & media</a>
+          <a href={homeHref("#about")} onClick={closeMenu}>About</a>
+          <a href={homeHref("#contact")} onClick={closeMenu}>Contact</a>
           <a className="button button--gold" href={bookingHref} target="_blank" rel="noreferrer" onClick={closeMenu}>
             Book a free consultation
           </a>
@@ -275,7 +288,7 @@ function Team() {
 
 function Insights() {
   const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? articles : articles.filter((article) => article.category === filter);
+  const filtered = filter === "All" ? allArticles : allArticles.filter((article) => article.format === filter);
   const lead = filtered[0];
   const supporting = filtered.slice(1, 5);
 
@@ -297,29 +310,159 @@ function Insights() {
         {lead ? (
           <div className="articles-layout" aria-live="polite">
             <article className="lead-article">
-              <a href={lead.href} target="_blank" rel="noreferrer" aria-label={`Read ${lead.title}`}>
-                <img src={asset(lead.image ?? "article-auckland-architecture.png")} width="1664" height="944" alt={lead.imageAlt ?? "Contemporary Auckland commercial architecture with the Sky Tower in the distance"} loading="lazy" />
+              <a {...articleLinkProps(lead)} aria-label={`Read ${lead.title}`}>
+                <img src={lead.featuredImage ? publicAsset(lead.featuredImage) : publicAsset(lead.image ?? "assets/article-auckland-architecture.png")} width="1664" height="944" alt={lead.featuredImageAlt ?? lead.imageAlt ?? "Contemporary Auckland commercial architecture with the Sky Tower in the distance"} loading="lazy" />
               </a>
-              <div className="article-meta"><span>{lead.category}</span><time dateTime={lead.isoDate}>{lead.date}</time></div>
-              <h3><a href={lead.href} target="_blank" rel="noreferrer">{lead.title}</a></h3>
-              <p>{lead.summary}</p>
-              <a className="text-link" href={lead.href} target="_blank" rel="noreferrer">Read article <ArrowRight size={17} /></a>
+              <div className="article-meta"><span>{lead.format}</span><time dateTime={lead.date}>{displayDate(lead.date)}</time></div>
+              <h3><a {...articleLinkProps(lead)}>{lead.title}</a></h3>
+              <p>{lead.excerpt}</p>
+              <a className="text-link" {...articleLinkProps(lead)}>Read article {lead.externalUrl ? <ArrowSquareOut size={17} /> : <ArrowRight size={17} />}</a>
             </article>
             <div className="article-list">
               {supporting.map((article) => (
-                <article className="article-row" key={article.href}>
-                  <div className="article-meta"><span>{article.category}</span><time dateTime={article.isoDate}>{article.date}</time></div>
-                  <h3><a href={article.href} target="_blank" rel="noreferrer">{article.title}</a></h3>
+                <article className="article-row" key={article.slug}>
+                  <div className="article-meta"><span>{article.format}</span><time dateTime={article.date}>{displayDate(article.date)}</time></div>
+                  <h3><a {...articleLinkProps(article)}>{article.title}</a></h3>
                   <p>{article.source}</p>
-                  <a href={article.href} target="_blank" rel="noreferrer" aria-label={`Read ${article.title}`}><ArrowRight size={18} /></a>
+                  <a {...articleLinkProps(article)} aria-label={`Read ${article.title}`}>{article.externalUrl ? <ArrowSquareOut size={18} /> : <ArrowRight size={18} />}</a>
                 </article>
               ))}
             </div>
           </div>
         ) : <p className="empty-state">More {filter.toLowerCase()} will be published here soon.</p>}
+        <div className="insights-all">
+          <a className="button button--outline" href={archiveHref}>Explore all {allArticles.length} articles</a>
+        </div>
       </div>
     </section>
   );
+}
+
+function ArticleCard({ article }) {
+  const imagePath = article.featuredImage ?? article.image;
+  return (
+    <article className="archive-card">
+      <a className="archive-card-image" {...articleLinkProps(article)} tabIndex={-1} aria-hidden="true">
+        <img
+          src={imagePath ? publicAsset(imagePath) : asset("article-auckland-architecture.png")}
+          width="720"
+          height="430"
+          alt=""
+          loading="lazy"
+        />
+      </a>
+      <div className="archive-card-body">
+        <div className="article-meta"><span>{article.format}</span><time dateTime={article.date}>{displayDate(article.date)}</time></div>
+        <h2><a {...articleLinkProps(article)}>{article.title}</a></h2>
+        <p>{article.excerpt}</p>
+        <div className="archive-card-footer">
+          <span>{article.topic}</span>
+          <a className="text-link" {...articleLinkProps(article)}>
+            {article.externalUrl ? "Read at source" : "Read article"}
+            {article.externalUrl ? <ArrowSquareOut size={16} /> : <ArrowRight size={16} />}
+          </a>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ArticleArchive() {
+  const [query, setQuery] = useState("");
+  const [format, setFormat] = useState("All");
+  const normalisedQuery = query.trim().toLowerCase();
+  const results = allArticles.filter((article) => {
+    const matchesFormat = format === "All" || article.format === format;
+    const haystack = `${article.title} ${article.excerpt} ${article.topic} ${article.source}`.toLowerCase();
+    return matchesFormat && (!normalisedQuery || haystack.includes(normalisedQuery));
+  });
+
+  useEffect(() => {
+    document.title = "Articles & media | Meridian Partners";
+  }, []);
+
+  return (
+    <>
+      <Header />
+      <main id="main-content">
+        <section className="archive-hero">
+          <div className="shell archive-hero-inner">
+            <p className="eyebrow eyebrow--light">Insights</p>
+            <h1>Articles & media</h1>
+            <p>Practical commentary on tax, Inland Revenue, student loans, investment, and the legal issues affecting New Zealanders.</p>
+          </div>
+        </section>
+        <section className="archive section" aria-labelledby="archive-results-title">
+          <div className="shell">
+            <div className="archive-tools">
+              <label className="search-field">
+                <span>Search articles</span>
+                <span className="search-input-wrap"><MagnifyingGlass size={20} aria-hidden="true" /><input value={query} onChange={(event) => setQuery(event.target.value)} type="search" placeholder="Search by topic or title" /></span>
+              </label>
+              <div className="filters archive-filters" role="group" aria-label="Filter article format">
+                {["All", "Analysis", "Media", "Updates"].map((label) => (
+                  <button className={format === label ? "is-active" : ""} key={label} type="button" aria-pressed={format === label} onClick={() => setFormat(label)}>{label}</button>
+                ))}
+              </div>
+            </div>
+            <div className="archive-results-heading">
+              <h2 id="archive-results-title">{results.length} {results.length === 1 ? "result" : "articles"}</h2>
+              {(query || format !== "All") && <button type="button" className="clear-filter" onClick={() => { setQuery(""); setFormat("All"); }}>Clear filters</button>}
+            </div>
+            {results.length ? <div className="archive-grid" aria-live="polite">{results.map((article) => <ArticleCard article={article} key={article.slug} />)}</div> : <p className="empty-state">No articles match that search. Try a broader term or clear the filters.</p>}
+          </div>
+        </section>
+        <ContactBand />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+function ArticlePage({ article }) {
+  const related = allArticles.filter((item) => item.slug !== article.slug && item.topic === article.topic).slice(0, 3);
+
+  useEffect(() => {
+    document.title = `${article.title} | Meridian Partners`;
+  }, [article.title]);
+
+  return (
+    <>
+      <Header />
+      <main id="main-content">
+        <article>
+          <header className="article-hero">
+            <div className="shell article-hero-grid">
+              <div>
+                <nav className="breadcrumb" aria-label="Breadcrumb"><a href={homeHref()}>Home</a><span aria-hidden="true">/</span><a href={archiveHref}>Articles & media</a></nav>
+                <p className="eyebrow eyebrow--light">{article.format} · {article.topic}</p>
+                <h1>{article.title}</h1>
+                <p className="article-deck">{article.excerpt}</p>
+                <div className="article-byline"><span>By {article.author}</span><time dateTime={article.date}>{displayDate(article.date)}</time><span>{article.readingMinutes} min read</span></div>
+              </div>
+              {article.featuredImage && <figure><img src={publicAsset(article.featuredImage)} width="960" height="640" alt={article.featuredImageAlt} /></figure>}
+            </div>
+          </header>
+          <div className="shell article-page-grid">
+            <aside className="article-aside"><p className="eyebrow">In this section</p><a href={archiveHref}>All articles</a><span>{article.topic}</span><span>{article.format}</span></aside>
+            <div className="article-content">
+              <div dangerouslySetInnerHTML={{ __html: article.content }} />
+              <div className="article-disclaimer"><h2>Important information</h2><p>This article provides general information only and is not legal advice. Every situation is different; seek advice about your particular circumstances.</p></div>
+              <a className="text-link article-back" href={archiveHref}><ArrowRight className="arrow-back" size={17} /> Back to all articles</a>
+            </div>
+          </div>
+        </article>
+        {related.length > 0 && <section className="related section section--soft" aria-labelledby="related-title"><div className="shell"><p className="eyebrow">Keep reading</p><h2 id="related-title">Related insights</h2><div className="archive-grid archive-grid--related">{related.map((item) => <ArticleCard article={item} key={item.slug} />)}</div></div></section>}
+        <ContactBand />
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+function NotFound() {
+  useEffect(() => { document.title = "Article not found | Meridian Partners"; }, []);
+  return <><Header /><main id="main-content"><section className="not-found shell"><p className="eyebrow">Article archive</p><h1>We couldn’t find that article.</h1><p>It may have moved during the migration from our previous website.</p><a className="button button--gold" href={archiveHref}>Browse all articles</a></section></main><Footer /></>;
 }
 
 function ContactBand() {
@@ -353,8 +496,8 @@ function Footer() {
         </div>
         <div>
           <h2>Meridian</h2>
-          <a href="#people">Our people</a>
-          <a href="#insights">Articles & media</a>
+          <a href={homeHref("#people")}>Our people</a>
+          <a href={archiveHref}>Articles & media</a>
           <a href="https://mplaw.nz/about-meridian-partners/" target="_blank" rel="noreferrer">About the firm</a>
         </div>
         <address>
@@ -373,6 +516,18 @@ function Footer() {
 }
 
 export function App() {
+  const params = new URLSearchParams(window.location.search);
+  const articleSlug = params.get("article");
+  const requestedArticle = articleSlug ? articleLibrary.find((article) => article.slug === articleSlug) : null;
+
+  if (articleSlug) {
+    return <><a className="skip-link" href="#main-content">Skip to content</a>{requestedArticle ? <ArticlePage article={requestedArticle} /> : <NotFound />}</>;
+  }
+
+  if (params.get("view") === "articles") {
+    return <><a className="skip-link" href="#main-content">Skip to content</a><ArticleArchive /></>;
+  }
+
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to content</a>
